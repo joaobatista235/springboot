@@ -22,7 +22,6 @@ public class ClienteController {
     private List<Cliente> clientes = new ArrayList<>();
     private int proximoId = 1;
 
-    // CREATE - POST /api/cliente
     @PostMapping
     public ResponseEntity<Cliente> criarCliente(@RequestBody Cliente cliente) {
         cliente.setId(proximoId++);
@@ -30,13 +29,11 @@ public class ClienteController {
         return ResponseEntity.status(HttpStatus.CREATED).body(cliente);
     }
 
-    // READ - GET /api/cliente
     @GetMapping
     public ResponseEntity<List<Cliente>> listarClientes() {
         return ResponseEntity.ok(clientes);
     }
 
-    // READ - GET /api/cliente/{id}
     @GetMapping("/{id}")
     public ResponseEntity<Cliente> obterClientePorId(@PathVariable int id) {
         for (Cliente cliente : clientes) {
@@ -47,7 +44,6 @@ public class ClienteController {
         return ResponseEntity.notFound().build();
     }
 
-    // UPDATE - PUT /api/cliente/{id}
     @PutMapping("/{id}")
     public ResponseEntity<Cliente> atualizarCliente(@PathVariable int id, @RequestBody Cliente clienteAtualizado) {
         for (int i = 0; i < clientes.size(); i++) {
@@ -60,7 +56,6 @@ public class ClienteController {
         return ResponseEntity.notFound().build();
     }
 
-    // DELETE - DELETE /api/cliente/{id}
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> removerCliente(@PathVariable int id) {
         for (int i = 0; i < clientes.size(); i++) {
