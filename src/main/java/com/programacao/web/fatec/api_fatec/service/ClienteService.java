@@ -1,11 +1,10 @@
 package com.programacao.web.fatec.api_fatec.service;
-
 import com.programacao.web.fatec.api_fatec.entities.Cliente;
-import com.programacao.web.fatec.api_fatec.domain.cliente.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
+import com.programacao.web.fatec.api_fatec.domain.ClienteRepository;
 
 @Service
 public class ClienteService {
@@ -28,8 +27,9 @@ public class ClienteService {
     public void deletar(int id) {
         clienteRepository.deleteById(id);
     }
-    
-    public Optional<Cliente> buscarPorNome(String nome) {
-        return clienteRepository.findByNome(nome);
+
+    public boolean existsById(int id){
+        return clienteRepository.existsById(id);
     }
+    
 }

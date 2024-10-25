@@ -5,6 +5,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.Column;
 
 @Entity
@@ -21,7 +24,8 @@ public class Fornecedor {
     public Fornecedor() {
     }
 
-    public Fornecedor(String nome) {
+    public Fornecedor(@JsonProperty("id") int id, @JsonProperty("nome") String nome) {
+        this.id = id;
         this.nome = nome;
     }
 

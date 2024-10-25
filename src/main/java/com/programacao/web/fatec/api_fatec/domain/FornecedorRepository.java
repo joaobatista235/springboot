@@ -1,9 +1,7 @@
-package com.programacao.web.fatec.api_fatec.domain.fornecedor;
-
-import java.util.Optional;
+package com.programacao.web.fatec.api_fatec.domain;
 import org.springframework.data.jpa.repository.JpaRepository;
 import com.programacao.web.fatec.api_fatec.entities.Fornecedor;
 
 public interface FornecedorRepository extends JpaRepository<Fornecedor, Integer> {
-    Optional<Fornecedor> findByNome(String nome);
+
 }

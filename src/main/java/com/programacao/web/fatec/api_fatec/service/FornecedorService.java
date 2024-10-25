@@ -5,7 +5,8 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.programacao.web.fatec.api_fatec.domain.fornecedor.FornecedorRepository;
+
+import com.programacao.web.fatec.api_fatec.domain.FornecedorRepository;
 import com.programacao.web.fatec.api_fatec.entities.Fornecedor;
 
 @Service
@@ -29,8 +30,9 @@ public class FornecedorService {
     public void deletar(int id) {
         fornecedorRepository.deleteById(id);
     }
-    
-    public Optional<Fornecedor> buscarPorNome(String nome) {
-        return fornecedorRepository.findByNome(nome);
+
+    public boolean existsById(int id){
+        return fornecedorRepository.existsById(id);
     }
+    
 }

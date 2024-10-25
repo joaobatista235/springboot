@@ -1,7 +1,4 @@
 package com.programacao.web.fatec.api_fatec.entities;
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -9,26 +6,26 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import com.programacao.web.fatec.api_fatec.entities.Cliente;
+
 
 @Entity
-@Table(name = "contas_pagar")
-public class ContasPagar {
+@Table(name = "contas_receber")
+public class ContasReceber {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "emissao")
     private LocalDate emissao;
-
-    @Column(name = "vencimento")
     private LocalDate vencimento;
 
     @ManyToOne
-    @JoinColumn(name = "fornecedor_id")
-    private Fornecedor fornecedor;
+    @JoinColumn(name = "cliente_id", nullable = false)
+    private Cliente cliente;
 
-    @Column(name = "valor", precision = 12, scale = 2)
     private BigDecimal valor;
 
     public Long getId() {
@@ -55,12 +52,12 @@ public class ContasPagar {
         this.vencimento = vencimento;
     }
 
-    public Fornecedor getFornecedor() {
-        return fornecedor;
+    public Cliente getCliente() {
+        return cliente;
     }
 
-    public void setFornecedor(Fornecedor fornecedor) {
-        this.fornecedor = fornecedor;
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 
     public BigDecimal getValor() {

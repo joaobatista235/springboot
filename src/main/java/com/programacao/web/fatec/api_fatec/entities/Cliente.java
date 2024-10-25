@@ -1,10 +1,12 @@
 package com.programacao.web.fatec.api_fatec.entities;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.Column;
 
 @Entity
@@ -21,7 +23,8 @@ public class Cliente {
     public Cliente() {
     }
 
-    public Cliente(String nome) {
+    public Cliente(@JsonProperty("id") int id, @JsonProperty("nome") String nome) {
+        this.id = id;
         this.nome = nome;
     }
 
