@@ -1,6 +1,5 @@
 package com.programacao.web.fatec.api_fatec.controllers;
 import com.programacao.web.fatec.api_fatec.entities.ContasReceber;
-import com.programacao.web.fatec.api_fatec.entities.Fornecedor;
 import com.programacao.web.fatec.api_fatec.service.ClienteService;
 import com.programacao.web.fatec.api_fatec.service.ContasReceberService;
 import org.springframework.beans.factory.annotation.Autowired;

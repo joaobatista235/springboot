@@ -8,7 +8,6 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import com.programacao.web.fatec.api_fatec.entities.Cliente;
 
 
 @Entity

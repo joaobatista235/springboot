@@ -1,6 +1,5 @@
 package com.programacao.web.fatec.api_fatec.controllers;
 import com.programacao.web.fatec.api_fatec.entities.Cliente;
-import com.programacao.web.fatec.api_fatec.entities.ContasPagar;
 import com.programacao.web.fatec.api_fatec.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;

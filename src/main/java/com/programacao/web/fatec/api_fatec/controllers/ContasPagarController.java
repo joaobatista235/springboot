@@ -1,7 +1,6 @@
 package com.programacao.web.fatec.api_fatec.controllers;
 
 import com.programacao.web.fatec.api_fatec.entities.ContasPagar;
-import com.programacao.web.fatec.api_fatec.entities.ContasReceber;
 import com.programacao.web.fatec.api_fatec.service.ContasPagarService;
 import com.programacao.web.fatec.api_fatec.service.FornecedorService;
 
