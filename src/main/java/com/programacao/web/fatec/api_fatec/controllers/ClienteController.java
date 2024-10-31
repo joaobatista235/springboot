@@ -39,8 +39,12 @@ public class ClienteController {
     @GetMapping("/{id}")
     public ResponseEntity<Cliente> buscarPorId(@PathVariable int id) {
         try {
-            Optional<Cliente> conta = clienteService.buscarPorId(id);
-            return new ResponseEntity<>(conta.get(), HttpStatus.OK);
+            if (!clienteService.existsById(id)) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            } else {
+                Optional<Cliente> conta = clienteService.buscarPorId(id);
+                return new ResponseEntity<>(conta.get(), HttpStatus.OK);
+            }
         } catch (DataAccessException e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

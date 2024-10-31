@@ -46,8 +46,12 @@ public class FornecedorController {
     @GetMapping("/{id}")
     public ResponseEntity<Fornecedor> buscarPorId(@PathVariable int id) {
         try {
-            Optional<Fornecedor> fornecedores = fornecedorService.buscarPorId(id);
-            return new ResponseEntity<>(fornecedores.get(), HttpStatus.OK);
+            if (!fornecedorService.existsById(id)) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            } else {
+                Optional<Fornecedor> fornecedores = fornecedorService.buscarPorId(id);
+                return new ResponseEntity<>(fornecedores.get(), HttpStatus.OK);
+            }
         } catch (DataAccessException e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
