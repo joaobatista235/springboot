@@ -27,24 +27,24 @@ http://localhost:8080
 ### 2. Fornecedor
 
 #### Criar um novo fornecedor
+
+**Endpoint:** `POST /api/fornecedor`
+
+**Exemplo de Request:**
 ```json
 {
   "nome": "Bruno"
 }
 
 ```
-### 2. Fornecedor
 
-#### Criar um novo fornecedor
-```json
-{
-  "nome": "Bruno"
-}
-
-```
 ### 3. Contas a Pagar 
 
 #### Criar uma nova conta a pagar
+
+**Endpoint:** `POST /api/contas_pagar`
+
+**Exemplo de Request:**
 ```json
 {
   "emissao": "2024-10-31",
@@ -59,6 +59,10 @@ http://localhost:8080
 ### 4. Contas a Receber 
 
 #### Criar uma nova conta a receber
+
+**Endpoint:** `POST /api/contas_receber`
+
+**Exemplo de Request:**
 ```json
 {
     "emissao": "2024-10-31",
