@@ -69,6 +69,16 @@ public class ContasPagarController {
     @PutMapping("{id}")
     public ResponseEntity<String> update(@PathVariable int id, @RequestBody ContasPagar conta) {
         try {
+            if (conta.getEmissao().isAfter(conta.getVencimento())) {
+                return new ResponseEntity<>("A data de emissão não pode ser posterior à data de vencimento.",
+                        HttpStatus.BAD_REQUEST);
+            }
+            if (conta.getValor().signum() <= 0) {
+                return new ResponseEntity<>("O valor da conta a pagar deve ser positivo.", HttpStatus.BAD_REQUEST);
+            }
+            if (!fornecedorService.existsById(conta.getFornecedor().getId())) {
+                return new ResponseEntity<>("Fornecedor não existe.", HttpStatus.BAD_REQUEST);
+            }
             if (!contasService.existsById(id)) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             } else {
