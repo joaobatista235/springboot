@@ -1,20 +1,18 @@
 package com.programacao.web.fatec.api_fatec.controllers;
-import java.util.List;
-import java.util.Optional;
+
+import com.programacao.web.fatec.api_fatec.dto.FornecedorDto;
+import com.programacao.web.fatec.api_fatec.entities.Fornecedor;
+import com.programacao.web.fatec.api_fatec.service.FornecedorService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import com.programacao.web.fatec.api_fatec.entities.Fornecedor;
-import com.programacao.web.fatec.api_fatec.service.FornecedorService;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/fornecedor")
@@ -23,56 +21,78 @@ public class FornecedorController {
     @Autowired
     private FornecedorService fornecedorService;
 
+    // Método para criar um novo fornecedor
     @PostMapping
-    public ResponseEntity<Fornecedor> criar(@RequestBody Fornecedor cliente) {
+    public ResponseEntity<FornecedorDto> criar(@RequestBody FornecedorDto fornecedorDto) {
         try {
-            Fornecedor credencial = fornecedorService.salvar(cliente);
-            return new ResponseEntity<>(credencial, HttpStatus.CREATED);
+            Fornecedor fornecedor = new Fornecedor();
+            fornecedor.setNome(fornecedorDto.getNome());
+
+            Fornecedor savedFornecedor = fornecedorService.salvar(fornecedor);
+
+            FornecedorDto savedFornecedorDto = new FornecedorDto(savedFornecedor.getId(), savedFornecedor.getNome());
+
+            return new ResponseEntity<>(savedFornecedorDto, HttpStatus.CREATED);
         } catch (Throwable th) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
+    // Método para listar todos os fornecedores
     @GetMapping
-    public ResponseEntity<List<Fornecedor>> listarTodos() {
-         try {
+    public ResponseEntity<List<FornecedorDto>> listarTodos() {
+        try {
             List<Fornecedor> fornecedores = fornecedorService.listarTodos();
-            return new ResponseEntity<>(fornecedores, HttpStatus.OK);
+
+            List<FornecedorDto> fornecedoresDto = fornecedores.stream()
+                .map(fornecedor -> new FornecedorDto(fornecedor.getId(), fornecedor.getNome()))
+                .collect(Collectors.toList());
+
+            return new ResponseEntity<>(fornecedoresDto, HttpStatus.OK);
         } catch (DataAccessException e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
+    // Método para buscar um fornecedor por ID
     @GetMapping("/{id}")
-    public ResponseEntity<Fornecedor> buscarPorId(@PathVariable int id) {
+    public ResponseEntity<FornecedorDto> buscarPorId(@PathVariable int id) {
         try {
             if (!fornecedorService.existsById(id)) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             } else {
-                Optional<Fornecedor> fornecedores = fornecedorService.buscarPorId(id);
-                return new ResponseEntity<>(fornecedores.get(), HttpStatus.OK);
+                Optional<Fornecedor> fornecedor = fornecedorService.buscarPorId(id);
+                
+                FornecedorDto fornecedorDto = new FornecedorDto(fornecedor.get().getId(), fornecedor.get().getNome());
+
+                return new ResponseEntity<>(fornecedorDto, HttpStatus.OK);
             }
         } catch (DataAccessException e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
+    // Método para atualizar um fornecedor
     @PutMapping("{id}")
-    public ResponseEntity<String> update(@PathVariable int id, @RequestBody Fornecedor entity) {
+    public ResponseEntity<String> update(@PathVariable int id, @RequestBody FornecedorDto fornecedorDto) {
         try {
             if (!fornecedorService.existsById(id)) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             } else {
-                entity.setId(id);
-                fornecedorService.salvar(entity);
+                Fornecedor fornecedor = new Fornecedor();
+                fornecedor.setId(id);
+                fornecedor.setNome(fornecedorDto.getNome());
+
+                fornecedorService.salvar(fornecedor);
+
                 return new ResponseEntity<>("Fornecedor atualizado com sucesso!", HttpStatus.OK);
             }
-
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
+    // Método para deletar um fornecedor
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletar(@PathVariable int id) {
         try {
@@ -87,5 +107,4 @@ public class FornecedorController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
 }

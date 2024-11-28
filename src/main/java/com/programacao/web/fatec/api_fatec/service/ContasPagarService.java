@@ -16,7 +16,7 @@ public class ContasPagarService {
         return contasRepository.findAll();
     }
 
-    public Optional<ContasPagar> buscarPorId(int id) {
+    public Optional<ContasPagar> buscarPorId(Long id) {
         return contasRepository.findById(id);
     }
 
@@ -24,11 +24,11 @@ public class ContasPagarService {
         return contasRepository.save(cliente);
     }
 
-    public void deletar(int id) {
+    public void deletar(Long id) {
         contasRepository.deleteById(id);
     }
 
-    public boolean existsById(int id){
+    public boolean existsById(Long id){
         return contasRepository.existsById(id);
     }
 
